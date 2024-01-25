@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/script.js" defer></script>
+    <title>Consulta de Usuário</title>
+</head>
+<body>
+    <!--HEADER-->
+    <div class="header">
+        <div id="btn-voltar" class="header-back" onclick="voltar()">
+            <img src="/assets/back.png">
+        </div>
+        <div class="header-logo">
+            <img src="/assets/logo.png">
+        </div>        
+        <h2 class="home-txt-logo">SUTERO</h2>     
+    </div>    
+
+    <div class="corpo">
+
+        <h3 class="titulo-pag">Consulta de Usuário</h3>    
+        <h3 class="desc-pag">Consulte o usuário conforme parâmetros abaixo</h3>     
+        
+
+        <!--CORPO-->
+        <div id="id-drop-tipo" class="dropdown-container">
+            <select id="selectOptions" name="selectOptions">
+                <option value="tipo">Tipo de Filtro</option>
+                <option value="nome">Nome</option>
+                <option value="cpf-rg">CPF/Identidade</option>
+                <option value="email">Email</option>
+                <option value="numero-login">Número de Login</option>
+                <option value="status">Status</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="div-label">
+                <label for="filtro">Filtro</label>
+            </div>            
+            <input type="text" id="filtro" name="filtro" required>
+            <div class="div-icon">
+                <img src="/assets/search.png">
+            </div>    
+        </div>
+
+        <h3 class="subtitulo">Usuários Listados</h3>  
+
+    </div>
+    
+</body>
+</html>
