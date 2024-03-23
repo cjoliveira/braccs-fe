@@ -1,0 +1,35 @@
+:root {
+  --cor-primaria: #333;
+  --texto-claro: #bfc4cc;
+  --texto: #5a636c;
+  --cinza: #f4f4f4;
+  --radius: 8px;
+  --cor-borda: #ccc;
+}
+
+
+table {
+    margin-top: 50px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table th, table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: var(--cor-primaria);
+    color: white;
+    font-weight: normal;
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+
+ 

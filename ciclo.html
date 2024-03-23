@@ -1,38 +1,96 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/script.js" defer></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style_header.css">
+    <link rel="stylesheet" href="css/styles_tabela.css">
+    <link rel="stylesheet" href="css/styles_controle_reprodutivo.css">
+    <script src="js/script.js" defer></script>
     <title>Ciclos Reprodutivos</title>
 </head>
-<body>
 
-    <div class="header">
-        <div id="btn-voltar" class="header-back" onclick="voltar()">
-            <img src="/assets/back.png">
-        </div>
-        <div class="header-logo">
-            <img src="/assets/logo.png">
-        </div>        
-        <h2 class="home-txt-logo">SUTERO</h2>     
-    </div>    
+<body>
 
     <div class="corpo">
 
-        <h3 class="titulo-pag">Ciclos Reprodutivos</h3>    
-        <h3 class="desc-pag">Manutenção dos ciclos reprodutivos</h3>     
-        
+        <div class="header row">
+            <div class="row esq">
+                <div id="btn-voltar" class="header-back" onclick="voltar()">
+                    <img src="assets/back.png">
+                </div>
+                <div class="header-logo">
+                    <img src="assets/logo.png">
+                </div>  
+                <h2 class="txt-logo">SUTERO</h2>   
+            </div>
+            
+            <div class="row dir">
+                <h3 class="txt-tipo">Admin</h3>
+                <div class="div-user">
+                    <img src="assets/user.png">
+                </div>
+            </div>
+        </div>   
 
-        
+        <div class="orientacao">
 
-        
+            <div class="div-1 pad colum">
+
+                <div class="div-titulo-pag">
+                    <h3 class="titulo-pag">Controle Reprodutivo</h3>
+                    <h3 class="desc-pag">Manutenção dos ciclos reprodutivos</h3>
+                </div>
+
+                <div class="div-textfield" id="textfield-protocolo">
+                    <div class="colum">
+                        <label for="n-protocolo">Número do protocolo</label>
+                        <input type="text" id="n-protocolo" name="n-protocolo" required>
+                    </div>
+                </div>
+
+                <div class="div-textfield" id="textfield-dt-inicio">
+                    <div class="colum">
+                        <label for="dt-inicio">Data de Início</label>
+                        <input type="text" id="dt-inicio" name="dt-inicio" required>
+                    </div>
+                </div>
+
+                <div class="div-textfield" id="textfield-dt-final">
+                    <div class="colum">
+                        <label for="dt-final">Data Final</label>
+                        <input type="text" id="dt-final" name="dt-final" required>
+                    </div>
+                </div>
+
+                <div id="id-drop-status" class="dropdown-container">
+                    <select id="selectOptions" name="selectOptions">
+                        <option value="criado">Criado</option>
+                        <option value="andamento">Em andamento</option>
+                        <option value="aplicado">Aplicado</option>
+                    </select>
+                </div>
+
+                <button id="btn-buscar">Buscar</button>
+
+
+            </div>
+
+
+            <div class="div-2 pad">
+                <?php include 'models/tabela_ciclo.html' ?>
+            </div>
+
+        </div>
+
+
+
+
     </div>
 
-    <footer>
-        <button id="botaoRodape">Salvar</button>
-    </footer>
 </body>
+
 </html>

@@ -1,8 +1,5 @@
-
-/* GERAL *****************/
-
 :root {
-    --cor-primaria: #1d242e;
+    --cor-primaria: #333;
     --texto-claro: #bfc4cc;
     --texto: #5a636c;
     --cinza: #f4f4f4;
@@ -10,13 +7,14 @@
     --cor-borda: #ccc;
 }
 
-p, a, h1, h2, h3, label, option{
+p, a, h1, h2, h3, label, option, td, th{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 html, body {
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     margin: 0;
     padding: 0;
     background-color: white;
@@ -47,6 +45,7 @@ button {
     border-radius: var(--radius);
     cursor: pointer;
     font-size: 16px;
+    z-index: 1;
 }
 
 button:hover {
@@ -55,8 +54,11 @@ button:hover {
 }
 
 .colum{
+    height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: start;
+    justify-content: start;    
 }
 
 .row{
@@ -64,230 +66,86 @@ button:hover {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: start;    
-}
-
-
-/* HEADER *****************/
-
-.header{
-    display: flex;
-    width: auto;
-    height: 60px;
-    flex-direction: row;
-    align-items: center;
-    align-self: start;
-    padding: 10px;
-    background-color: #f4f4f4;
-}
-
-.header img{
-    width: 50px;
-    height: 50px;   
-    margin-left: 10px;
-    margin-right: 10px;
+    justify-content: start; 
     
 }
 
-.header-back img{
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+.centro{
+    justify-content: center;
 }
 
-.txt-logo{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 20px;
+.espaco-dir{
+    margin-right: 20px;
 }
 
-#id-tipo-user{
-    margin-top: 10px;
-    margin-left: 10px;
+.espaco-esq{
+    margin-left: 20px;
 }
 
-.exibir {
-    display: block;
+.espaco-top{
+    margin-top: 20px;
 }
 
-
-/* CORPO *****************/
-
-.corpo{
-   padding: 20px;
-   overflow: hidden;
+.espaco-baixo{
+    margin-bottom: 20px;
 }
 
-
-/* LOGIN *****************/
-.login-container {
-    width: 300px;
-    height: 450px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: var(--radius);
-    border-color: var(--cinza);
-    border: 1px solid #ccc;
+.pad{
+    padding: 30px;
+    box-sizing: border-box;
 }
 
-.login-form {
+.corpo{    
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
 }
 
-.login-txt-logo{
-    margin-top: -5px;
-    text-align: center;
-}
-
-.login-form h1{
-    text-align: center;
-}
-
-.txt-login {
-    text-align: start;
-    color: #333;
-}
-
-
-/* HOME *****************/
-.home-user{
+.orientacao{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    background-color: #f4f4f4;
-    border-radius: var(--radius);    
-}
-
-.home-user img{
-    width: 30px;
-    height: 30px;
-}
-
-.home-tipo-user{
-    display: flex;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-}
-
-.txt-tipo{
-    font-size: 16px;
-}
-
-.opcoes {
-    margin-top: 10px;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px; /* Espaçamento entre as células */
-}
-
-.grid-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f4f4f4;
-    padding: 20px;
-    text-align: center;
-    border-radius: var(--radius);    
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-}
-
-.grid-item:hover{
-    background-color: orange;
-}
-
-/* TEXTFIELD *******************/
-
-.div-textfield{
-    margin-right: 10px;
-    margin-bottom: 10px;
     width: 100%;
-    margin-top: 15px;
-}
-
-.div-textfield label{
-    margin-bottom: 5px;
-}
-
-input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: var(--radius);
-
-}
-
-#dt-nascimento, #dt-nasc, #tel-2{
-    width: 95%;
-}
-
-/* TEXTAREA *******************/
-
-.div-textarea{
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    resize: none; 
-    border: 1px solid #ccc;
-    border-radius: var(--radius);
-    margin-top: 5px;
-}
-
-#div-atualizacao{
-    margin: 30px;
-}
-
-#div-atualizacao textarea{
-    height: 150px;
-}
-
-/* DROPDOWN *******************/
-
-.dropdown-container{
-    width: 100%;
-    margin-top: 10px;
+    height: 100%;
     
 }
 
-#selectOptions{
+.div-1{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    border-right: 1px solid var(--cinza);
+    box-sizing: border-box;
     width: 100%;
-    padding: 8px;
-    border-radius: var(--radius);
-    border: 1px solid #ccc;
-    font-size: 12px;
+    height: 50%; 
 }
 
-.div-icon{
-    width: 35px;
-    height: 35px;
-    background-color: #ccc;
-    border-radius: var(--radius);
+.div-2{
     display: flex;
+    align-items: start;
+    justify-content: start;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50%;
+}
+
+
+
+#corpo-login{
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 5px;
-    margin-left: 5px;
+    box-sizing: border-box;
 }
 
-.div-icon img{
-    width: 25px;
-    height: 25px;
-}
 
-#id-drop-genero{
-    margin-top: 8px;
-}
 
-#id-drop-perfil{
-    margin-right: 10px;
+.div-titulo-pag{
+    width: 100%;
+    background-color: transparent;
 }
 
 
@@ -301,27 +159,103 @@ textarea {
     color: var(--texto-claro);
     margin-top: -10px;
     font-weight: normal;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 
-#filtro{
-    width: 250px;
-    margin-bottom: 30px;
+/* TEXTFIELD *******************/
+
+.div-textfield{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.div-textfield label{
+    margin-bottom: 5px;
+}
+
+ input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    box-sizing: border-box;
+}
+
+/* TEXTAREA *******************/
+
+.div-textarea{
+    width: 100%;
+    height: 100%;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+#label-textarea{
+    font-weight: bold;
 }
 
 
+/* DROPDOWN *******************/
+
+.dropdown-container{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.dropdown-container select{
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius);
+    border: 1px solid #ccc;
+}
+
+
+
+
+/*
+.selectOptions{
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+
+#id-drop-perfil{
+    margin-right: 10px;
+}
+*/
 
 /* CHECKBOX *******************/
 
 .checkbox-container{
     display: flex;
+    width: 200px;
+    flex-direction: row;
     justify-content: start;
     align-items: center;
     margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.checkbox-container label{
+    width: 80%;
+    background-color: transparent;
 }
 
 .checkbox-container input{
+    width: 20%;
     margin-right: 10px;
 }
 
@@ -331,16 +265,19 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
-    height: 100px;
     border: 1px solid #ccc;
     border-radius: var(--radius);
-    margin-bottom: 20px;
-    margin-top: -20px;
+    margin-bottom: 10px;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
 .div-foto img{
     width: 35px;
     height: 35px;
 }
+
+
+
+
 

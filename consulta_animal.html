@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style_header.css">
+    <link rel="stylesheet" href="css/styles_tabela.css">
+    <link rel="stylesheet" href="css/styles_consulta_animal.css">
+    <script src="js/script.js" defer></script>
+    <title>Consulta de Animais</title>
+</head>
+
+<body>
+
+    <div class="corpo">
+
+        <div class="header row">
+            <div class="row esq">
+                <div id="btn-voltar" class="header-back" onclick="voltar()">
+                    <img src="assets/back.png">
+                </div>
+                <div class="header-logo">
+                    <img src="assets/logo.png">
+                </div>  
+                <h2 class="txt-logo">SUTERO</h2>   
+            </div>
+            
+            <div class="row dir">
+                <h3 class="txt-tipo">Admin</h3>
+                <div class="div-user">
+                    <img src="assets/user.png">
+                </div>
+            </div>
+        </div>   
+
+        <div class="orientacao">
+            <div class="div-1 pad colum">
+
+                <div class="div-titulo-pag">
+                    <h3 class="titulo-pag">Consultar Animal</h3>
+                    <h3 class="desc-pag">Consulte o animal conforme parâmetros abaixo</h3>
+                </div>
+
+                <div class="colum">
+
+                    <div id="id-drop-tipo" class="dropdown-container">
+                        <select id="selectOptions" name="selectOptions">
+                            <option value="numId">Nº Identificação</option>
+                            <option value="tipo">Tipo/Espécie</option>
+                            <option value="genero">Gênero</option>
+                            <option value="dataNasc">Data de Nascimento</option>
+                            <option value="dataCadastro">Data de Cadastro</option>
+                            <option value="dimensao">Dimensões</option>
+                            <option value="peso">Peso</option>
+                            <option value="statusAtual">Status</option>
+                        </select>
+                    </div>
+
+                    <div class="row espaco-top" id="div-consulta">
+                        <input type="text" id="text-filtro-animal" name="filtro" placeholder="Filtrar" required>
+                        <div class="div-icon">
+                            <img id="btn-filtro-animal" src="assets/search.png">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="div-2 pad">
+
+                <div id="card-list-animais"></div>
+
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Nº de Identificação</th>
+                            <th>Tipo/Espécie</th>
+                            <th>Gênero</th>
+                            <th>Data de Nascimento</th>
+                            <th>Data de Cadastro</th>
+                            <th>Dimensões</th>
+                            <th>Peso</th>
+                            <th>Status</th>
+                            <th>Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados da tabela serão adicionados aqui -->
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+</body>
+
+</html>

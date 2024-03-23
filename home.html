@@ -1,61 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/script.js" defer></script>
-    <title>Home - Sutero</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style_header.css">
+    <link rel="stylesheet" href="css/styles_home.css">
+    <script src="js/script.js" defer></script>
+    <title>Home - Sutero</title>    
 </head>
+
 <body>
-
-    <div class="header">
-        <div id="btn-voltar" class="header-back">
-            <img src="/assets/back.png">
-        </div>
-        <div class="header-logo">
-            <img src="/assets/logo.png">
-        </div>        
-        <h2 class="txt-logo">SUTERO</h2>     
-    </div>   
-
     <div class="corpo">
-
-        <div class="row">
-            <div class="home-tipo-user">
-                <div class="home-user">
-                <img src="/assets/user.png">
+        
+        <div class="header row">
+            <div class="row esq">
+                <div id="btn-voltar" class="header-back" onclick="voltar()">
+                    <img src="assets/back.png">
                 </div>
-            </div>   
-            <h3 class="txt-tipo">Administrador</h3>
+                <div class="header-logo">
+                    <img src="assets/logo.png">
+                </div>  
+                <h2 class="txt-logo">SUTERO</h2>   
+            </div>
+            
+            <div class="row dir">
+                <h3 class="txt-tipo">Admin</h3>
+                <div class="div-user">
+                    <img src="assets/user.png">
+                </div>
+            </div>
+        </div>   
+
+
+        <div class="orientacao">
+
+            <div class="div-1 pad">
+
+
+                <div class="opcoes">
+                    <div id="btn-novo-usuario" class="grid-item">
+                        <h1>Novo Usuário</h1>
+                    </div>
+                    <div id="btn-consultar-usuario" class="grid-item">
+                        <h1>Consultar Usuário</h1>
+                    </div>
+                    <div id="btn-novo-animal" class="grid-item">
+                        <h1>Registrar Animal</h1>
+                    </div>
+                    <div id="btn-consultar-animal" class="grid-item">
+                        <h1>Consultar Animal</h1>
+                    </div>
+                    <div id="btn-ciclo" class="grid-item">
+                        <h1>Ciclo Reprodutivo</h1>
+                    </div>
+                    <div id="btn-relatorios" class="grid-item">
+                        <h1>Relatórios</h1>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="div-2 pad">
+
+                <div id="div-atualizacao" class="div-textarea pad">
+                    <label id="label-textarea" for="meuTextarea">Atualizações</label>
+                    <textarea id="meuTextarea" name="meuTexto"></textarea>
+                </div>
+
+            </div>
+
         </div>
 
 
-        <div class="opcoes">
-            <div id="btn-relatorios" class="grid-item"><h1>Relatórios</h1></div>
-            <div id="btn-ciclo" class="grid-item"><h1>Ciclo Reprodutivo</h1></div>
-            <div id="btn-novo-usuario" class="grid-item"><h1>Novo Usuário</h1></div>
-            <div id="btn-consultar-usuario" class="grid-item"><h1>Consultar Usuário</h1></div>
-            <div id="btn-novo-animal" class="grid-item"><h1>Registrar Animal</h1></div>
-            <div id="btn-consultar-animal" class="grid-item"><h1>Consultar Animal</h1></div>
-            <div id="btn-compra" class="grid-item"><h1>Compra</h1></div>
-            <div id="btn-venda" class="grid-item"><h1>Venda</h1></div>        
-        </div>
-
-
-        <div id="div-atualizacao" class="div-textarea">
-            <label for="meuTextarea">Atualizações</label>
-            <textarea id="meuTextarea" name="meuTexto"></textarea>
-        </div>
-       
 
     </div>
 
-    <footer>
-        <button id="botaoRodape">Sair</button>
-    </footer>
-   
-  
+
+
 </body>
+
 </html>

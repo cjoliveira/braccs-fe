@@ -1,0 +1,136 @@
+:root {
+    --cor-primaria: #333;
+    --texto-claro: #bfc4cc;
+    --texto: #5a636c;
+    --cinza: #f4f4f4;
+    --radius: 8px;
+    --cor-borda: #ccc;
+}
+
+.div-1{
+    justify-content: start !important;
+    align-items: start !important;
+    width: 50%;
+    height: 100%;
+}
+
+.div-2{
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    padding-top: 0px;    
+    margin-top: 0px;
+}
+
+#id-drop-tipo{
+    width: 300px;
+}
+
+.div-label{
+    padding: 10px;
+}
+
+
+.div-icon{
+    width: 35px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.div-icon img{
+    width: 25px;
+    height: 25px;
+}
+
+
+.div-icon:hover{
+    background-color: orange;
+}
+
+
+#filtro{
+    width: 300px;
+}
+
+
+#card-list-usuarios {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 90%;
+    height: 180px;
+    background-color: #f2f2f2;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    
+}
+
+.card h1, h2 {
+    font-size: 14px;
+}
+
+.card h1{
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+.card h2{
+    margin-top: 3px;
+    font-weight: normal;
+    margin-left: 5px;
+}
+
+.card p {
+    margin-bottom: 0;
+}
+
+
+thead{
+    position: sticky;
+    top: -1px;
+}
+
+th{
+    padding: 20px !important;
+}
+
+
+
+/* MEDIA QUERYS TRATAMENTOS DE ACORDO COM O TAMANHO DE TELA *******************/
+
+@media screen and (max-width: 1500px){
+    .orientacao{
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .div-1{
+        width: 100%;
+        height: 25%;
+    }
+
+}

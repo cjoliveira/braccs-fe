@@ -5,33 +5,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/script.js" defer></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles_login.css">
+    <script src="js/script.js" defer></script>
     <title>Login - Sutero</title>
 </head>
 
 <body>
-    <div class="corpo">    
-        <div class="login-container">
-            <form class="login-form">
-                <div class="home-logo">
-                    <img src="/assets/logo.jpg">
-                </div>
-                <h2 class="login-txt-logo">SUTERO</h2>
-                <h2 class="txt-login">Login</h2>
-                <label for="username">Usuário</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="password" required>
-                
-                <button type="submit" onclick="redirectToAnotherPage()">Login</button>
-            </form>
-            
+    <div id="corpo-login">
+
+        <div class="logo">
+            <img src="assets/logo.jpg">
         </div>
-        <a href="">Esqueci a senha</a>
+        <h2 class="login-txt-logo">SUTERO</h2>
+
+        <div class="div-login">
+
+            <form>
+                <h2 class="txt-login">Login</h2>
+
+                <div class="div-textfield">
+                    <div class="colum">
+                        <label for="username">Usuário</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                </div>
+
+                <div class="div-textfield">
+                    <div class="colum">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-login">Login</button>
+
+            </form>
+
+        </div>
+
+        <h2 class="txt-esqueci-senha">Esqueci a senha</h2>
+
     </div>
-    
+
 </body>
 
 </html>

@@ -1,0 +1,61 @@
+:root {
+    --cor-primaria: #333;
+    --texto-claro: #bfc4cc;
+    --texto: #5a636c;
+    --cinza: #f4f4f4;
+    --radius: 8px;
+    --cor-borda: #ccc;
+}
+
+.div-1{
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+
+#textfield-primeiro-nome, 
+#textfield-cpf-rg, 
+#textfield-pis-pasep, 
+#textfield-tel-1{
+    margin-right: 20px;    
+}
+
+#textfield-primeiro-nome,
+#textfield-sobrenome,
+#textfield-cpf-rg,
+#textfield-pis-pasep,
+#textfield-dt-nasc,
+#textfield-tel-1, #textfield-tel-2, #textfield-email{
+    margin-top: 20px;
+}
+
+
+button{
+    margin-top: 20px !important;
+}
+
+
+/** MEDIA QUERY *************************************************/
+
+@media screen and (orientation: portrait) {
+    .orientacao{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 20px;
+    }
+      
+}
+
+
+@media screen and (orientation: landscape) {
+    .orientacao{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .div-1, .div-2{
+        width: 50%;
+        height: 100%;
+    }
+}

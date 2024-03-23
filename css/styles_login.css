@@ -1,0 +1,44 @@
+:root {
+    --cor-primaria: #333;
+    --texto-claro: #bfc4cc;
+    --texto: #5a636c;
+    --cinza: #f4f4f4;
+    --radius: 8px;
+    --cor-borda: #ccc;
+}
+
+.div-login{
+    width: 300px;
+    height: 350px;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#corpo-login .logo img{
+    width: 180px;
+    height: 180px;
+}
+
+.login-txt-logo{
+    font-size: 20px;
+    margin-top: -20px;
+    margin-bottom: 50px;
+}
+
+.txt-login{
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+.div-login button{
+    margin-top: 30px;
+    width: 100%;
+}
+
+.txt-esqueci-senha{
+    font-size: 14px;
+    margin-top: 50px;
+    cursor: pointer;
+}

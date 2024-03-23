@@ -1,103 +1,123 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/script.js" defer></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style_header.css">
+    <link rel="stylesheet" href="css/styles_cadastro_animal.css">
+    <script src="js/script.js" defer></script>
     <title>Cadastro Animal</title>
 </head>
+
 <body>
-    
-    <div class="header">
-        <div id="btn-voltar" class="header-back" onclick="voltar()">
-            <img src="/assets/back.png">
-        </div>
-        <div class="header-logo">
-            <img src="/assets/logo.png">
-        </div>        
-        <h2 class="home-txt-logo">SUTERO</h2>     
-    </div>    
 
     <div class="corpo">
 
-        <h3 class="titulo-pag">Cadastro de Animal</h3>    
-        <h3 class="desc-pag">Informe os dados de cadastro para o novo animal</h3>     
-
-
-        <form class="form">
-
-            <div class="div-foto">
-                <img src="/assets/vaca.png">
+        <div class="header row">
+            <div class="row esq">
+                <div id="btn-voltar" class="header-back" onclick="voltar()">
+                    <img src="assets/back.png">
+                </div>
+                <div class="header-logo">
+                    <img src="assets/logo.png">
+                </div>  
+                <h2 class="txt-logo">SUTERO</h2>   
             </div>
-
-            <div class="div-textfield">
-                <div class="colum">
-                    <label for="n-identificador">Número Identificador*</label>
-                    <input type="text" id="n-identificador" name="n-identificador" required>
+            
+            <div class="row dir">
+                <h3 class="txt-tipo">Admin</h3>
+                <div class="div-user">
+                    <img src="assets/user.png">
                 </div>
             </div>
+        </div>   
 
-            <div class="row">
-                <div class="div-textfield">
-                    <div class="colum">
-                        <label for="peso">Peso*</label>
-                        <input type="text" id="peso" name="peso" required>
+        <div class="orientacao">
+            <div class="div-1 pad">
+
+                <div class="div-titulo-pag">
+                    <h3 class="titulo-pag">Cadastro de Animal</h3>
+                    <h3 class="desc-pag">Informe os dados de cadastro para o novo animal</h3>
+                </div>
+
+                <div class="div-foto">
+                    <img src="assets/vaca.png">
+                </div>
+
+                <div class="row">
+                    <div class="div-textfield espaco-dir">
+                        <div class="colum">
+                            <label for="n-identificador">Número Identificador*</label>
+                            <input type="text" id="n-identificador" name="n-identificador" required>
+                        </div>
+                    </div>
+
+                    <div class="div-textfield">
+                        <div class="colum">
+                            <label for="peso">Peso*</label>
+                            <input type="text" id="peso" name="peso" required>
+                        </div>
                     </div>
                 </div>
 
-                <div id="id-drop-genero" class="dropdown-container">
-                    <select id="selectOptions" name="selectOptions">
-                        <option value="administrador">Gênero</option>
-                        <option value="veterinario">Macho</option>
-                        <option value="funcionario">Fêmea</option>
-                    </select>
-                </div>
-            </div>
+                <div class="row">
+                    <div id="id-drop-genero" class="dropdown-container espaco-dir">
+                        <select class="selectOptions" id="options-genero" name="selectOptions">
+                            <option value="administrador">Gênero</option>
+                            <option value="veterinario">Macho</option>
+                            <option value="funcionario">Fêmea</option>
+                        </select>
+                    </div>
 
-            <div class="checkbox-container">
-                <input type="checkbox" id="minhaCheckbox" class="custom-checkbox">
-                <label for="minhaCheckbox" class="checkbox-label">Animal Comprado</label>
-            </div>
-
-            <div class="row">
-                <div class="div-textfield">
-                    <div class="colum">
-                        <label for="n-mae">Número da mãe*</label>
-                        <input type="text" id="n-mae" name="n-mae" required>
+                    <div id="id-drop-status" class="dropdown-container">
+                        <select class="selectOptions" id="options-status" name="selectOptions">
+                            <option value="administrador">Status Inicial*</option>
+                            <option value="veterinario">Para venda</option>
+                            <option value="funcionario">Para cria</option>
+                            <option value="funcionario">Outro (observações)</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="div-textfield">
-                    <div class="colum">
-                        <label for="dt-nascimento">Data de Nascimento*</label>
-                        <input type="text" id="dt-nascimento" name="dt-nascimento" required>
+                <div class="row espaco-top">
+                    <div class="div-textfield espaco-dir">
+                        <div class="colum">
+                            <label for="n-mae">Número da mãe*</label>
+                            <input type="text" id="n-mae" name="n-mae" required>
+                        </div>
+                    </div>
+
+                    <div class="div-textfield">
+                        <div class="colum">
+                            <label for="dt-nascimento">Data de Nascimento*</label>
+                            <input type="text" id="dt-nascimento" name="dt-nascimento" required>
+                        </div>
                     </div>
                 </div>
+
+                <div class="checkbox-container espaco-top">
+                    <input type="checkbox" id="minhaCheckbox" class="custom-checkbox">
+                    <label for="minhaCheckbox" class="checkbox-label">Animal Comprado</label>
+                </div>
+
+                <div class="div-textarea">
+                    <label for="meuTextarea">Observações</label>
+                    <textarea id="meuTextarea" name="meuTexto" placeholder="Digite aqui..."></textarea>
+                </div>
+
+                <button id="btn-save-usuario">Salvar</button>
+
             </div>
 
-            <div id="id-drop-status" class="dropdown-container">
-                <select id="selectOptions" name="selectOptions">
-                    <option value="administrador">Status Inicial*</option>
-                    <option value="veterinario">Para venda</option>
-                    <option value="funcionario">Para cria</option>
-                    <option value="funcionario">Outro (observações)</option>
-                </select>
-            </div>
+            <div class="div-2 pad"></div>
+        </div>
 
-            <div class="div-textarea">
-                <label for="meuTextarea">Observações</label>
-                <textarea id="meuTextarea" name="meuTexto" placeholder="Digite aqui..."></textarea>
-            </div>
 
-        </form>        
-     
     </div>
 
-    <footer>
-        <button id="botaoRodape">Salvar</button>
-    </footer>
-
 </body>
+
 </html>

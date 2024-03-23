@@ -1,0 +1,108 @@
+:root {
+    --cor-primaria: #333;
+    --texto-claro: #bfc4cc;
+    --texto: #5a636c;
+    --cinza: #f4f4f4;
+    --radius: 8px;
+    --cor-borda: #ccc;
+}
+
+
+.header{
+    display: flex;
+    width: 100%;
+    height: 15%;
+    flex-direction: row;
+    align-items: center;
+    align-self: start;
+    background-color: #f4f4f4;
+}
+
+.header .esq{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 20px;
+}
+
+.header .dir{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 20px;
+}
+
+
+.header img{
+    width: 50px;
+    height: 50px;   
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+.header-back img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.txt-logo{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+}
+
+#id-tipo-user{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.exibir {
+    display: block;
+}
+
+.login-form .logo img{
+    width: 150px;
+    height: 150px;
+}
+
+
+.div-tipo-user{
+    background-color: red;
+    float: right;
+}
+
+
+.div-user{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: white;
+    border-radius: var(--radius);
+    margin-left: 10px;    
+}
+
+.div-user img{
+    width: 30px;
+    height: 30px;
+}
+
+.home-tipo-user{
+    display: flex;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.txt-tipo{
+    font-size: 16px;
+}

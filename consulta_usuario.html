@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/style_header.css">
+    <link rel="stylesheet" href="css/styles_tabela.css">
+    <link rel="stylesheet" href="css/styles_consulta_usuario.css">
+    <script src="js/script.js" defer></script>
+    <title>Consulta de Usuário</title>
+</head>
+
+<body>
+    <div class="corpo">
+
+        <div class="header row">
+            <div class="row esq">
+                <div id="btn-voltar" class="header-back" onclick="voltar()">
+                    <img src="assets/back.png">
+                </div>
+                <div class="header-logo">
+                    <img src="assets/logo.png">
+                </div>  
+                <h2 class="txt-logo">SUTERO</h2>   
+            </div>
+            
+            <div class="row dir">
+                <h3 class="txt-tipo">Admin</h3>
+                <div class="div-user">
+                    <img src="assets/user.png">
+                </div>
+            </div>
+        </div>   
+
+        <div class="orientacao">
+            <div class="div-1 pad colum">
+
+                <div class="div-titulo-pag">
+                    <h3 class="titulo-pag">Consulta de Usuário</h3>
+                    <h3 class="desc-pag">Consulte um usuário conforme parâmetros abaixo</h3>
+                </div>
+
+
+                <div class="colum">
+                    <div id="id-drop-tipo" class="dropdown-container">
+                        <select id="selectOptions" name="selectOptions">
+                            <option value="tipo">Tipo de Filtro</option>
+                            <option value="nome">Nome</option>
+                            <option value="cpf-rg">CPF/Identidade</option>
+                            <option value="email">Email</option>
+                            <option value="numero-login">Número de Login</option>
+                            <option value="status">Status</option>
+                        </select>
+                    </div>
+
+                    <div class="row espaco-top" id="div-consulta">
+                        <input type="text" id="filtro" name="filtro" placeholder="Filtrar" required>
+                        <div class="div-icon">
+                            <img src="assets/search.png">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="div-2 pad">
+
+                <div id="card-list-usuarios"></div>
+
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>IDLogin</th>
+                            <th>Nome</th>
+                            <th>Perfil</th>
+                            <th>CPF/Identidade</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Visualizar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados da tabela serão adicionados aqui -->
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
