@@ -9,30 +9,14 @@ window.addEventListener('load', function () {
         if (device === 'mobile') {
             displayCardListUsuario();
         } else {
-
-            const larguraDaTela = window.innerWidth;
-
-            if (larguraDaTela <= 810) {
-                displayCardListUsuario();
-            } else {
-                displayTableUsuario();
-            }
-
+            displayTableUsuario();
         }
     } else if (pagina == 'Consulta de Animais') {
         const device = getDeviceType();
         if (device === 'mobile') {
             displayCardListAnimal();
         } else {
-
-            const larguraDaTela = window.innerWidth;
-
-            if (larguraDaTela <= 810) {
-                displayCardListAnimal();
-            } else {
-                displayTableAnimal();
-            }
-
+            displayTableAnimal();
         }
     }
 
@@ -47,30 +31,14 @@ window.addEventListener('resize', function () {
         if (device === 'mobile') {
             displayCardListUsuario();
         } else {
-
-            const larguraDaTela = window.innerWidth;
-
-            if (larguraDaTela <= 810) {
-                displayCardListUsuario();
-            } else {
-                displayTableUsuario();
-            }
-
+            displayTableUsuario();   
         }
     } else if (pagina == 'Consulta de Animais') {
         const device = getDeviceType();
         if (device === 'mobile') {
             displayCardListAnimal();
         } else {
-
-            const larguraDaTela = window.innerWidth;
-
-            if (larguraDaTela <= 810) {
-                displayCardListAnimal();
-            } else {
-                displayTableAnimal();
-            }
-
+            displayTableAnimal();
         }
     }
 })
@@ -152,25 +120,24 @@ function voltar() {
 
 //Criando objeto usuário
 class Usuario {
-    constructor(id, nome, perfil, cpf, email, status) {
-        this.id = id;
+    constructor(login, nome, perfil, cpf, email, dataCadastro) {
+        this.login = login;
         this.nome = nome;
         this.perfil = perfil;
         this.cpf = cpf;
         this.email = email;
-        this.status = status;
+        this.dataCadastro = dataCadastro;
     }
 }
 
 //Criando objeto animal
 class Animal {
-    constructor(id, tipo, genero, dtNasc, dtCad, dimensao, peso, status) {
+    constructor(id, tipo, genero, dtNasc, dtCad, peso, status) {
         this.id = id;
         this.tipo = tipo;
         this.genero = genero;
         this.dtNasc = dtNasc;
         this.dtCad = dtCad;
-        this.dimensao = dimensao;
         this.peso = peso;
         this.status = status;
     }
@@ -192,20 +159,19 @@ function generateUsuarioMockData() {
     const mockData = [];
 
     for (let i = 1; i <= 10; i++) {
-        const id = i;
+        const login = 'login' + i;
         const nome = 'Usuário ' + i;
         const perfil = 'Usuário';
         const cpf = '000.000.000-00';
         const email = 'email@email.com';
-        const status = 'Ativo';
+        const dataCadastro = '2023-01-01';
 
-        const usuario = new Usuario(id, nome, perfil, cpf, email, status);
+        const usuario = new Usuario(login, nome, perfil, cpf, email, dataCadastro);
         mockData.push(usuario);
     }
 
     return mockData;
 }
-
 
 function generateAnimalMockData() {
     const mockData = [];
@@ -216,11 +182,10 @@ function generateAnimalMockData() {
         const genero = 'Fêmea';
         const dtNasc = '01/01/2020';
         const dtCad = '15/01/2024';
-        const dimensao = '30x40x20 cm';
         const peso = '5 kg';
         const status = 'Ativo';
 
-        const animal = new Animal(id, tipo, genero, dtNasc, dtCad, dimensao, peso, status);
+        const animal = new Animal(id, tipo, genero, dtNasc, dtCad, peso, status);
         mockData.push(animal);
     }
 
@@ -235,10 +200,27 @@ async function retrieveAnimalData() {
         console.log(data);
         const animalList = [];
         data.forEach(animal => {
-            const animalObj = new Animal(animal.numId, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.dimensao, animal.peso, animal.statusAtual);
+            const animalObj = new Animal(animal.numId, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.peso, animal.statusAtual);
             animalList.push(animalObj);
         });
         return animalList;
+    } catch (error) {
+        return console.log(error);
+    }
+}
+
+async function retrieveUsuarioData() {
+
+    try {
+        const response = await fetch('http://localhost:8080/gado/usuario/buscar-usuarios', { method: 'GET' });
+        const data = await response.json();
+        console.log(data);
+        const usuarioList = [];
+        data.forEach(usuario => {
+            const usuarioObj = new Usuario(usuario.login, usuario.nome, usuario.perfil, usuario.cpf, usuario.emailUsuario, usuario.dataCadast);
+            usuarioList.push(usuarioObj);
+        });
+        return usuarioList;
     } catch (error) {
         return console.log(error);
     }
@@ -288,8 +270,6 @@ function displayCardListUsuario() {
     });
 }
 
-
-
 //função para gerar dados em forma de cards - mobile
 function displayCardListAnimal() {
 
@@ -333,10 +313,8 @@ function displayCardListAnimal() {
     });
 }
 
-
-
 //função para gerar dados em forma de tabela - devices médios e grandes
-function displayTableUsuario() {
+async function displayTableUsuario(usuarioList) {
 
     const tabela = document.getElementById('dataTable');
     if (tabela)
@@ -347,20 +325,25 @@ function displayTableUsuario() {
         cards.style.display = 'none';
 
     const container = document.getElementById('dataTable')?.getElementsByTagName('tbody')[0];
-    const mockData = generateUsuarioMockData();
 
+    container.innerHTML = '';
+    
+    if(usuarioList == null) {
+        usuarioList = await retrieveUsuarioData();
+    }
+        
     const row = document.createElement('tr');
     row.innerHTML = '';
 
-    mockData.forEach(usuario => {
+    usuarioList.forEach(usuario => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${usuario.id}</td>
+            <td>${usuario.login}</td>
             <td>${usuario.nome}</td>
             <td>${usuario.perfil}</td>
             <td>${usuario.cpf}</td>
             <td>${usuario.email}</td>
-            <td>${usuario.status}</td>
+            <td>${new Date(usuario.dataCadastro).toLocaleDateString()}</td>
             <td><a href='#'>Visualizar</a></td>
         `;
         container?.appendChild(row);
@@ -379,6 +362,9 @@ async function displayTableAnimal(animalList) {
         cards.style.display = 'none';
 
     const container = document.getElementById('dataTable')?.getElementsByTagName('tbody')[0];
+
+    container.innerHTML = '';
+
     if(animalList == null) {
         animalList = await retrieveAnimalData();
     }
@@ -394,8 +380,7 @@ async function displayTableAnimal(animalList) {
             <td>${animal.genero}</td>
             <td>${new Date(animal.dtNasc).toLocaleDateString()}</td>
             <td>${new Date(animal.dtCad).toLocaleDateString()}</td>
-            <td>${animal.dimensao}</td>
-            <td>${animal.peso}</td>
+            <td>${animal.peso} kg</td>
             <td>${animal.status}</td>
             <td><a href='#'>Visualizar</a></td>
         `;
@@ -405,7 +390,7 @@ async function displayTableAnimal(animalList) {
 
 
 /**
- *! CONSUMINDO API 
+ *******************************   EVENTOS DE INTERAÇÃO COM O USUÁRIO   *******************************
  */
 
 /**
@@ -436,6 +421,41 @@ btnLogin?.addEventListener('click', function () {
     .catch(error => console.log(error));
 });  
 
+
+/**
+ * FUNÇÃO DE FILTRO USUARIO
+ */
+const btnFiltroUsuario = document.getElementById("btn-filtro-usuario");
+
+btnFiltroUsuario?.addEventListener('click', function () {
+    const filterText = document.getElementById("text-filtro-usuario").value;
+    const option = document.getElementById("selectOptionsFiltroUsuario").value;
+
+    fetch('http://localhost:8080/gado/usuario/buscar-usuarios?' + new URLSearchParams({
+        [option]: filterText
+    }), { method: 'GET' })
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else {
+            alert('Erro ao buscar usuarios!');
+        }
+    })
+    .then(data => {
+        console.log(data);
+        const usuariosList = [];
+        data.forEach(usuario => {
+            const usuarioObj = new Usuario(usuario.login, usuario.nome, usuario.perfil, usuario.cpf, usuario.emailUsuario, usuario.dataCadast);
+            usuariosList.push(usuarioObj);
+        });
+        displayTableUsuario(usuariosList);
+    })
+    .catch(error => console.log(error));
+});
+
+/**
+ * FUNÇÃO DE FILTRO ANIMAL
+ */
 const btnFiltroAnimal = document.getElementById("btn-filtro-animal");
 
 btnFiltroAnimal?.addEventListener('click', function () {
@@ -456,7 +476,7 @@ btnFiltroAnimal?.addEventListener('click', function () {
         console.log(data);
         const animalList = [];
         data.forEach(animal => {
-            const animalObj = new Animal(animal.numId, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.dimensao, animal.peso, animal.statusAtual);
+            const animalObj = new Animal(animal.numId, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.peso, animal.statusAtual);
             animalList.push(animalObj);
         });
         displayTableAnimal(animalList);

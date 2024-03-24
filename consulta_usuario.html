@@ -46,20 +46,20 @@
 
                 <div class="colum">
                     <div id="id-drop-tipo" class="dropdown-container">
-                        <select id="selectOptions" name="selectOptions">
-                            <option value="tipo">Tipo de Filtro</option>
+                        <select id="selectOptionsFiltroUsuario" name="selectOptions">
+                            <option value="login">Login</option>
                             <option value="nome">Nome</option>
-                            <option value="cpf-rg">CPF/Identidade</option>
+                            <option value="perfil">Perfil</option>
+                            <option value="cpf">CPF</option>
                             <option value="email">Email</option>
-                            <option value="numero-login">Número de Login</option>
-                            <option value="status">Status</option>
+                            <option value="dataCadastro">Data de Cadastro</option>
                         </select>
                     </div>
 
                     <div class="row espaco-top" id="div-consulta">
-                        <input type="text" id="filtro" name="filtro" placeholder="Filtrar" required>
+                        <input type="text" id="text-filtro-usuario" name="filtro" placeholder="Filtrar" required>
                         <div class="div-icon">
-                            <img src="assets/search.png">
+                            <img id="btn-filtro-usuario" src="assets/search.png">
                         </div>
                     </div>
                 </div>
@@ -72,12 +72,12 @@
                 <table id="dataTable">
                     <thead>
                         <tr>
-                            <th>IDLogin</th>
+                            <th>Login</th>
                             <th>Nome</th>
                             <th>Perfil</th>
-                            <th>CPF/Identidade</th>
+                            <th>CPF</th>
                             <th>Email</th>
-                            <th>Status</th>
+                            <th>Data de Cadastro</th>
                             <th>Visualizar</th>
                         </tr>
                     </thead>
