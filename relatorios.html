@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/style_header.css">
     <link rel="stylesheet" href="css/styles_relatorios.css">
+    <link rel="stylesheet" href="css/styles_tabela.css">
     <script src="js/script.js" defer></script>
     <title>Relatórios</title>
 </head>
@@ -28,7 +29,7 @@
             </div>
             
             <div class="row dir">
-                <h3 class="txt-tipo">Admin</h3>
+                <h3 id="usuario" class="txt-tipo">Admin</h3>
                 <div class="div-user">
                     <img src="assets/user.png">
                 </div>
@@ -47,11 +48,11 @@
 
                 <div id="id-drop-relatorio" class="dropdown-container">
                     <select id="selectOptions" name="selectOptions">
-                        <option value="animais">Dados do rebanho</option>
-                        <option value="compra">Compra</option>
-                        <option value="venda">Venda</option>
-                        <option value="obitos">Óbitos</option>
+                        <option value="animais">Dados do Rebanho</option>
+                        <option value="venda">Vendas</option>
+                        <option value="compra">Compras</option>
                         <option value="ciclo">Ciclo Reprodutivo</option>
+                        <option value="obito">Óbito</option>                        
                     </select>
                 </div>
 
@@ -74,9 +75,15 @@
                     </div>
                 </div>
 
-                <button id="btn-buscar">Buscar</button>
+                <button id="btn-buscar">Gerar Relatório</button>
 
             </div>
+
+            <div class="div-3 pad colum">          
+                <div id="titulo-tabela"></div>  
+                <div id="dataTable"></div>
+            </div>
+
 
         </div>
 

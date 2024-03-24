@@ -27,7 +27,7 @@
             </div>
             
             <div class="row dir">
-                <h3 class="txt-tipo">Admin</h3>
+                <h3 id="usuario" class="txt-tipo">Admin</h3>
                 <div class="div-user">
                     <img src="assets/user.png">
                 </div>
@@ -50,31 +50,8 @@
                 <div class="row">
                     <div class="div-textfield" id="textfield-primeiro-nome">
                         <div class="colum">
-                            <label for="primeiro-nome">Primeiro Nome*</label>
+                            <label for="primeiro-nome">Nome Completo*</label>
                             <input type="text" id="primeiro-nome" name="primeiro-nome">
-                        </div>
-                    </div>
-
-                    <div class="div-textfield" id="textfield-sobrenome">
-                        <div class="colum">
-                            <label for="sobrenome">Sobrenome*</label>
-                            <input type="text" id="sobrenome" name="sobrenome">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="div-textfield" id="textfield-cpf-rg">
-                        <div class="colum">
-                            <label for="cpf-rg">CPF/Identidade*</label>
-                            <input type="text" id="cpf-rg" name="cpf-rg">
-                        </div>
-                    </div>
-
-                    <div class="div-textfield" id="textfield-pis-pasep">
-                        <div class="colum">
-                            <label for="pis-pasep">PIS/PASEP*</label>
-                            <input type="text" id="pis-pasep" name="pis-pasep">
                         </div>
                     </div>
 
@@ -87,6 +64,13 @@
                 </div>
 
                 <div class="row">
+                    <div class="div-textfield" id="textfield-cpf-rg">
+                        <div class="colum">
+                            <label for="cpf-rg">CPF/Identidade*</label>
+                            <input type="text" id="cpf-rg" name="cpf-rg">
+                        </div>
+                    </div>
+
                     <div id="id-drop-perfil" class="dropdown-container">
                         <label for="options-perfil">Perfil:</label>
                         <select class="selectOptions" id="options-perfil" name="selectOptions">
@@ -94,18 +78,12 @@
                             <option value="veterinario">Veterinário</option>
                             <option value="funcionario">Funcionário</option>
                         </select>
-                    </div>
+                    </div>              
 
-                    <div id="id-drop-genero" class="dropdown-container">
-                        <label for="options-genero">Gênero:</label>
-                        <select class="selectOptions" id="options-genero" name="selectOptions">
-                            <option value="masculino">Masculino</option>
-                            <option value="feminino">Feminino</option>
-                            <option value="outro">Outro</option>
-                        </select>
-                    </div>
+                    
                 </div>
 
+                <!--
                 <div class="row">
                     <div class="div-textfield" id="textfield-tel-1">
                         <div class="colum">
@@ -121,13 +99,31 @@
                         </div>
                     </div>
                 </div>
+                -->
+                
+                <div class="row">
 
-
-                <div class="div-textfield" id="textfield-email">
-                    <div class="colum">
-                        <label for="email">Email*</label>
-                        <input type="text" id="email" name="email">
+                    <div class="div-textfield espaco-dir" id="textfield-email">
+                        <div class="colum">
+                            <label for="email">Email*</label>
+                            <input type="text" id="email" name="email">
+                        </div>
                     </div>
+
+                    <div class="div-textfield espaco-dir" id="textfield-login">
+                        <div class="colum">
+                            <label for="email">Login*</label>
+                            <input type="text" id="login" name="login">
+                        </div>
+                    </div>
+
+                    <div class="div-textfield" id="textfield-senha">
+                        <div class="colum">
+                            <label for="email">Senha*</label>
+                            <input type="password" id="senha" name="senha">
+                        </div>
+                    </div>
+
                 </div>
 
 

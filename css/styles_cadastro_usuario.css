@@ -26,7 +26,10 @@
 #textfield-cpf-rg,
 #textfield-pis-pasep,
 #textfield-dt-nasc,
-#textfield-tel-1, #textfield-tel-2, #textfield-email{
+#textfield-tel-1, #textfield-tel-2, 
+#textfield-email, 
+#textfield-login, 
+#textfield-senha{
     margin-top: 20px;
 }
 

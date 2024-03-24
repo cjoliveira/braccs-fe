@@ -10,7 +10,7 @@
 
 .div-1{
     width: 50%;
-    max-width: 500px;
+    max-width: 400px;
     height: 100%;
     flex-direction: column;
     justify-content: start;
@@ -19,18 +19,22 @@
 
 .div-2{
     width: 100%;
+    max-width: 400px;
     height: 100%;
     flex-direction: column;
     justify-content: start;
-    align-items: start;
+    align-items: center;
+}
+
+
+.div-3{
+    overflow: auto;
 }
 
 
 #id-drop-relatorio{
     width: 300px;
 }
-
-
 
 
 #textfield-protocolo, 
