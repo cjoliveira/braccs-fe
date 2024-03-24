@@ -1,24 +1,45 @@
-// @ts-nocheck
+/**
+ *******************************   EVENTOS DE INTERAÇÃO USUÁRIO   *******************************
+ */
+
+ // @ts-nocheck
 window.addEventListener('load', function () {
     var pagina = document.title;
     toggleBtnVoltar(pagina);
 
+    if (pagina == 'Login - Sutero') {
+        clearPrefsUsuario()
+    }
 
     if (pagina == 'Consulta de Usuário') {
-        const device = getDeviceType();
-        if (device === 'mobile') {
-            displayCardListUsuario();
+        const canAccess = ['Fazendeiro', 'Administrador']
+        if (checkUserPermission(canAccess)) {
+            const device = getDeviceType();
+            if (device === 'mobile') {
+                displayCardListUsuario();
+            } else {
+                displayTableUsuario();
+            }
         } else {
-            displayTableUsuario();
+            this.alert('Você não tem permissão para acessar essa página!');
+            redirectToAnotherPage()
         }
     } else if (pagina == 'Consulta de Animais') {
-        const device = getDeviceType();
-        if (device === 'mobile') {
-            displayCardListAnimal();
+        const canAccess = ['Fazendeiro', 'Administrador', 'Veterinário', 'Funcionário']
+        if (checkUserPermission(canAccess)) {
+            const device = getDeviceType();
+            if (device === 'mobile') {
+                displayCardListAnimal();
+            } else {
+                displayTableAnimal();
+            }
         } else {
-            displayTableAnimal();
+            this.alert('Você não tem permissão para acessar essa página!');
+            redirectToAnotherPage
         }
     }
+
+    setInfoUsuario(pagina);
 
 });
 
@@ -27,22 +48,84 @@ window.addEventListener('resize', function () {
     var pagina = document.title;
 
     if (pagina == 'Consulta de Usuário') {
-        const device = getDeviceType();
-        if (device === 'mobile') {
-            displayCardListUsuario();
+        const canAccess = ['Fazendeiro', 'Administrador']
+        if (checkUserPermission()) {
+            const device = getDeviceType();
+            if (device === 'mobile') {
+                displayCardListUsuario();
+            } else {
+                displayTableUsuario();
+            }
         } else {
-            displayTableUsuario();   
+            this.alert('Você não tem permissão para acessar essa página!');
+            redirectToAnotherPage()
         }
     } else if (pagina == 'Consulta de Animais') {
-        const device = getDeviceType();
-        if (device === 'mobile') {
-            displayCardListAnimal();
+        const canAccess = ['Fazendeiro', 'Administrador', 'Veterinário', 'Funcionário']
+        if (checkUserPermission(canAccess)) {
+            const device = getDeviceType();
+            if (device === 'mobile') {
+                displayCardListAnimal();
+            } else {
+                displayTableAnimal();
+            }
         } else {
-            displayTableAnimal();
+            this.alert('Você não tem permissão para acessar essa página!');
+            redirectToAnotherPage
         }
     }
 })
 
+// Funcao que seta informações do usuario logado
+function setInfoUsuario(pagina) {
+    //Setando informções do usuario
+    if (pagina != 'Login - Sutero') {
+        var usuarioLogado = getUsuario();
+        var perfil = getPerfil();
+
+        var usuario = document.getElementById("usuario");
+        usuario.textContent = usuarioLogado + ' | ' + perfil;
+    }
+}
+
+function logout() {
+    clearPrefsUsuario();
+    window.location.href = 'index.html';
+}
+
+function checkUserPermission(canAccess) {
+    return canAccess.includes(getPerfil());
+}
+
+
+/**
+ * FUNÇÃO LOGIN DE SESSÃO
+ */
+const btnLogin = document.getElementById("btn-login");
+
+btnLogin?.addEventListener('click', function () {
+    const usuario = document.getElementById("username").value;
+    const senha = document.getElementById("password").value;
+
+    fetch('http://localhost:8080/gado/usuario/login?' + new URLSearchParams({
+        login: usuario,
+        senha: senha
+    }), { method: 'POST' })
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else {
+            alert('Usuário ou senha inválidos!');
+            throw new Error('Erro na autenticação');
+        }
+    })
+    .then(data => {
+        console.log(data);
+        savePrefsUsuario(data.login, data.perfil);
+        window.open("home.html", "_self");
+    })
+    .catch(error => console.log(error));
+});  
 
 function redirectToAnotherPage() {
     window.location.href = 'home.html';
@@ -395,40 +478,6 @@ async function displayTableAnimal(animalList) {
     });
 }
 
-
-/**
- *******************************   EVENTOS DE INTERAÇÃO COM O USUÁRIO   *******************************
- */
-
-/**
- * FUNÇÃO LOGIN DE SESSÃO
- */
-const btnLogin = document.getElementById("btn-login");
-
-btnLogin?.addEventListener('click', function () {
-    const usuario = document.getElementById("username").value;
-    const senha = document.getElementById("password").value;
-
-    fetch('http://localhost:8080/gado/usuario/login?' + new URLSearchParams({
-        login: usuario,
-        senha: senha
-    }), { method: 'POST' })
-    .then(response => {
-        if(response.ok) {
-            return response.json();
-        } else {
-            alert('Usuário ou senha inválidos!');
-            throw new Error('Erro na autenticação');
-        }
-    })
-    .then(data => {
-        console.log(data);
-        redirectToAnotherPage()
-    })
-    .catch(error => console.log(error));
-});  
-
-
 /**
  * FUNÇÃO DE FILTRO USUARIO
  */
@@ -609,4 +658,26 @@ async function deleteUsuario() {
     } catch (error) {
         console.error('Erro:', error);
     }
+}
+
+//! LOCAL STORAGE - AMAZENAMENTO DO USUARIO LOCALMENTE (BROWSER)
+function savePrefsUsuario(usuario, tipo) {
+    localStorage.setItem("usuario", usuario);
+    localStorage.setItem("perfil", tipo);
+    window.location.href = "home.html";
+}
+
+function getUsuario() {
+    var usuario = localStorage.getItem("usuario");
+    return usuario;
+}
+
+function getPerfil() {
+    var perfil = localStorage.getItem("perfil");
+    return perfil;
+}
+
+function clearPrefsUsuario() {
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("perfil");
 }
