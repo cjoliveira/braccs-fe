@@ -29,7 +29,7 @@
             </div>
             
             <div class="row dir">
-                <h3 class="txt-tipo">Admin</h3>
+                <h3 id="usuario" class="txt-tipo"></h3>
                 <div class="div-user">
                     <img src="assets/user.png">
                 </div>
@@ -48,7 +48,9 @@
 
                     <div id="id-drop-tipo" class="dropdown-container">
                         <select id="selectOptions" name="selectOptions">
+                            <option value="idAnimal">Indice</option>
                             <option value="numId">Nº Identificação</option>
+                            <option value="mae.numId">Nº da Mãe</option>
                             <option value="tipo">Tipo/Espécie</option>
                             <option value="genero">Gênero</option>
                             <option value="dataNasc">Data de Nascimento</option>
@@ -76,7 +78,9 @@
                 <table id="dataTable">
                     <thead>
                         <tr>
+                            <th>Indice</th>
                             <th>Nº de Identificação</th>
+                            <th>Nº da Mãe</th>
                             <th>Tipo/Espécie</th>
                             <th>Gênero</th>
                             <th>Data de Nascimento</th>
