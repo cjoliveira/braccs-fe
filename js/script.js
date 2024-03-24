@@ -132,8 +132,10 @@ class Usuario {
 
 //Criando objeto animal
 class Animal {
-    constructor(id, tipo, genero, dtNasc, dtCad, peso, status) {
-        this.id = id;
+    constructor(idAnimal, numId, numIdMae, tipo, genero, dtNasc, dtCad, peso, status) {
+        this.idAnimal = idAnimal;
+        this.numId = numId;
+        this.numIdMae = numIdMae;
         this.tipo = tipo;
         this.genero = genero;
         this.dtNasc = dtNasc;
@@ -177,7 +179,9 @@ function generateAnimalMockData() {
     const mockData = [];
 
     for (let i = 1; i <= 10; i++) {
-        const id = i;
+        const idAnimal = i;
+        const numId = i;
+        const numIdMae = i + 1;
         const tipo = 'Vaca';
         const genero = 'Fêmea';
         const dtNasc = '01/01/2020';
@@ -185,7 +189,7 @@ function generateAnimalMockData() {
         const peso = '5 kg';
         const status = 'Ativo';
 
-        const animal = new Animal(id, tipo, genero, dtNasc, dtCad, peso, status);
+        const animal = new Animal(idAnimal, numId, numIdMae, tipo, genero, dtNasc, dtCad, peso, status);
         mockData.push(animal);
     }
 
@@ -200,7 +204,8 @@ async function retrieveAnimalData() {
         console.log(data);
         const animalList = [];
         data.forEach(animal => {
-            const animalObj = new Animal(animal.numId, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.peso, animal.statusAtual);
+            const numIdMae = animal.mae ? animal.mae.numId : "";
+            const animalObj = new Animal(animal.idAnimal, animal.numId, numIdMae, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.peso, animal.statusAtual);
             animalList.push(animalObj);
         });
         return animalList;
@@ -375,7 +380,9 @@ async function displayTableAnimal(animalList) {
     animalList.forEach(animal => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${animal.id}</td>
+            <td>${animal.idAnimal}</td>
+            <td>${animal.numId}</td>
+            <td>${animal.numIdMae}</td>
             <td>${animal.tipo}</td>
             <td>${animal.genero}</td>
             <td>${new Date(animal.dtNasc).toLocaleDateString()}</td>
@@ -476,7 +483,8 @@ btnFiltroAnimal?.addEventListener('click', function () {
         console.log(data);
         const animalList = [];
         data.forEach(animal => {
-            const animalObj = new Animal(animal.numId, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.peso, animal.statusAtual);
+            const numIdMae = animal.mae ? animal.mae.numId : "";
+            const animalObj = new Animal(animal.idAnimal, animal.numId, numIdMae, animal.tipo, animal.genero, animal.dataNasc, animal.dataCadastro, animal.peso, animal.statusAtual);
             animalList.push(animalObj);
         });
         displayTableAnimal(animalList);
