@@ -1,8 +1,4 @@
-/**
- *******************************   EVENTOS DE INTERAÇÃO USUÁRIO   *******************************
- */
-
- // @ts-nocheck
+// @ts-nocheck
 window.addEventListener('load', function () {
     var pagina = document.title;
     toggleBtnVoltar(pagina);
@@ -43,7 +39,7 @@ window.addEventListener('load', function () {
 
 });
 
-//Executar função ao redimencionar pagina
+// Executar função ao redimencionar pagina
 window.addEventListener('resize', function () {
     var pagina = document.title;
 
@@ -88,44 +84,16 @@ function setInfoUsuario(pagina) {
     }
 }
 
-function logout() {
-    clearPrefsUsuario();
-    window.location.href = 'index.html';
-}
-
+//Função para verificar permissão de usuário
 function checkUserPermission(canAccess) {
     return canAccess.includes(getPerfil());
 }
 
-
-/**
- * FUNÇÃO LOGIN DE SESSÃO
- */
-const btnLogin = document.getElementById("btn-login");
-
-btnLogin?.addEventListener('click', function () {
-    const usuario = document.getElementById("username").value;
-    const senha = document.getElementById("password").value;
-
-    fetch('http://localhost:8080/gado/usuario/login?' + new URLSearchParams({
-        login: usuario,
-        senha: senha
-    }), { method: 'POST' })
-    .then(response => {
-        if(response.ok) {
-            return response.json();
-        } else {
-            alert('Usuário ou senha inválidos!');
-            throw new Error('Erro na autenticação');
-        }
-    })
-    .then(data => {
-        console.log(data);
-        savePrefsUsuario(data.login, data.perfil);
-        window.open("home.html", "_self");
-    })
-    .catch(error => console.log(error));
-});  
+//Função para deslogar usuário
+function logout() {
+    clearPrefsUsuario();
+    window.location.href = 'index.html';
+}
 
 function redirectToAnotherPage() {
     window.location.href = 'home.html';
@@ -478,9 +446,134 @@ async function displayTableAnimal(animalList) {
     });
 }
 
+
 /**
- * FUNÇÃO DE FILTRO USUARIO
- */
+ *******************************   EVENTOS DE INTERAÇÃO USUÁRIO   *******************************
+*/
+
+// [ACTION] Evento para realizar login 
+
+function loginPage() {
+    const usuario = document.getElementById("username").value;
+    const senha = document.getElementById("password").value;
+
+    fetch('http://localhost:8080/gado/usuario/login?' + new URLSearchParams({
+        login: usuario,
+        senha: senha
+    }), { method: 'POST' })
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else {
+            alert('Usuário ou senha inválidos!');
+            throw new Error('Erro na autenticação');
+        }
+    })
+    .then(data => {
+        console.log(data);
+        savePrefsUsuario(data.login, data.perfil);
+        window.open("home.html", "_self");
+    })
+    .catch(error => console.log(error));
+}
+
+// [ACTION] Evento para salvar usuário
+const btnSaveUsuario = document.getElementById("btn-save-usuario");
+
+btnSaveUsuario?.addEventListener('click', function () {
+
+    const nome = document.getElementById('nome-completo').value;
+    const cpf = document.getElementById('cpf').value;
+    const dtNasc = document.getElementById('dt-nasc').value;
+    const perfil = document.getElementById('options-perfil').value;
+    const email = document.getElementById('email').value;
+    const login = document.getElementById('login').value;
+    const senha = document.getElementById('senha').value;
+
+    // Regular expression to check date format dd/mm/yyyy
+    const datePattern = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+
+    if (!datePattern.test(dtNasc)) {
+        alert("Data de nascimento não está no formato correto (dd/mm/yyyy). Por favor, corrija e tente novamente.");
+        if (!nome) document.getElementById('nome-completo').value = '';
+        if (!cpf) document.getElementById('cpf').value = '';
+        if (!dtNasc) document.getElementById('dt-nasc').value = '';
+        if (!perfil) document.getElementById('options-perfil').value = '';
+        if (!email) document.getElementById('email').value = '';
+        if (!login) document.getElementById('login').value = '';
+        if (!senha) document.getElementById('senha').value = '';
+        return;
+    }
+
+    if (nome && cpf && dtNasc && perfil && email && login && senha) {
+        callApiToSaveUser(nome, cpf, dtNasc, perfil, email, login, senha);
+    } else {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        if (!nome) document.getElementById('nome-completo').value = '';
+        if (!cpf) document.getElementById('cpf').value = '';
+        if (!dtNasc) document.getElementById('dt-nasc').value = '';
+        if (!perfil) document.getElementById('options-perfil').value = '';
+        if (!email) document.getElementById('email').value = '';
+        if (!login) document.getElementById('login').value = '';
+        if (!senha) document.getElementById('senha').value = '';
+        return;
+    }
+
+});
+
+
+//Salvando usuário no banco de dados
+async function callApiToSaveUser(nome, cpf,  dtNasc, perfil, email, login, senha) {
+
+    const url = new URL('http://localhost:8080/gado/usuario/salvar-usuario');
+
+    // Add login and senha as query parameters
+    url.searchParams.append('login', login);
+    url.searchParams.append('senha', senha);
+
+    // Parâmetros que serão enviados no corpo da solicitação POST
+    const parametros = {
+        nome: nome,
+        cpf: cpf,
+        dataNasc: new Date(dtNasc.split('/').reverse().join('-')).toISOString().split('T')[0],
+        dataCadast: new Date().toISOString().split('T')[0],
+        perfil: perfil,
+        emailUsuario: email,
+    };
+
+    // Configuração da solicitação POST
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Indica que o corpo da solicitação é JSON
+        },
+        body: JSON.stringify(parametros) // Converte o objeto de parâmetros em JSON
+    };
+
+    // Realiza a solicitação POST
+    fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ocorreu um erro ao enviar a solicitação.');
+            }
+            return response.json(); // Converte a resposta JSON em um objeto JavaScript
+        })
+        .then(data => {
+            console.log('Sucesso:', data);
+            alert('Usuário salvo com sucesso!');
+            location.reload();
+            return;
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao salvar o usuário.');
+            location.reload();
+            return;
+        });
+}
+
+
+// [ACTION] Evento para filtrar usuarios
 const btnFiltroUsuario = document.getElementById("btn-filtro-usuario");
 
 btnFiltroUsuario?.addEventListener('click', function () {
@@ -509,9 +602,7 @@ btnFiltroUsuario?.addEventListener('click', function () {
     .catch(error => console.log(error));
 });
 
-/**
- * FUNÇÃO DE FILTRO ANIMAL
- */
+// [ACTION] Evento para filtrar animais
 const btnFiltroAnimal = document.getElementById("btn-filtro-animal");
 
 btnFiltroAnimal?.addEventListener('click', function () {
@@ -540,78 +631,6 @@ btnFiltroAnimal?.addEventListener('click', function () {
     })
     .catch(error => console.log(error));
 });
-
-const btnSaveUsuario = document.getElementById("btn-save-usuario");
-
-btnSaveUsuario?.addEventListener('click', function () {
-
-    const nome = document.getElementById('primeiro-nome').value;
-    const sobrenome = document.getElementById('sobrenome').value;
-    const cpf = document.getElementById('cpf-rg').value;
-    const pis = document.getElementById('pis-pasep').value;
-    const dtNasc = document.getElementById('dt-nasc').value;
-    const perfil = document.getElementById('options-perfil').value;
-    const genero = document.getElementById('options-genero').value;
-    const tel1 = document.getElementById('tel-1').value;
-    const tel2 = document.getElementById('tel-2').value;
-    const email = document.getElementById('email').value;
-
-    if (nome && sobrenome && cpf && pis && dtNasc && perfil && genero && tel1 && tel2 && email) {
-        saveUsuario(nome, sobrenome, cpf, pis, dtNasc, perfil, genero, tel1, email);
-    }
-
-
-});
-
-
-
-//Salvando usuário no banco de dados
-async function saveUsuario(nome, sobrenome, cpf, pis, dtNasc, perfil, genero, tel1, tel2, email) {
-
-    const url = 'http://localhost:8080/gado/usuarios/salvar-usuario';
-
-    // Parâmetros que serão enviados no corpo da solicitação POST
-    const parametros = {
-        nome: nome,
-        sobrenome: sobrenome,
-        cpf: cpf,
-        pis: pis,
-        dtNasc: dtNasc,
-        perfil: perfil,
-        genero: genero,
-        tel1: tel1,
-        tel2: tel2,
-        email: email,
-    };
-
-    // Configuração da solicitação POST
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json' // Indica que o corpo da solicitação é JSON
-        },
-        body: JSON.stringify(parametros) // Converte o objeto de parâmetros em JSON
-    };
-
-    // Realiza a solicitação POST
-    fetch(url, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ocorreu um erro ao enviar a solicitação.');
-            }
-            return response.json(); // Converte a resposta JSON em um objeto JavaScript
-        })
-        .then(data => {
-            console.log('Resposta da API:', data); // Exibe os dados retornados pela API
-            // Faça algo com os dados retornados pela API
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-        });
-
-
-}
-
 
 
 //buscando usuario no banco de dados
