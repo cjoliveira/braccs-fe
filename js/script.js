@@ -3,16 +3,25 @@ window.addEventListener('load', function () {
     var pagina = document.title;
     toggleBtnVoltar(pagina);
 
+    if (pagina != 'Login - Sutero'){
+        checkUser();
+    }
+
     if (pagina == 'Login - Sutero') {
         clearPrefsUsuario()
     }
+    
     
     if (pagina == 'Home - Sutero') {
         checkUser();
     }
 
-    if (pagina == 'Cadastro Usuário') {
+
+    if (pagina == 'Home - Sutero') {
         checkUser();
+    }
+
+    if (pagina == 'Cadastro Usuário') {
         const canAccess = ['Fazendeiro', 'Administrador']
         if (!checkUserPermission(canAccess)) {
             this.alert('Você não tem permissão para acessar essa página!');
@@ -21,7 +30,6 @@ window.addEventListener('load', function () {
     }
 
     if (pagina == 'Consulta de Usuário') {
-        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador']
         if (checkUserPermission(canAccess)) {
             const device = getDeviceType();
@@ -37,7 +45,6 @@ window.addEventListener('load', function () {
     } 
     
     if (pagina == 'Consulta de Animais') {
-        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador', 'Veterinário', 'Funcionário']
         if (checkUserPermission(canAccess)) {
             const device = getDeviceType();
@@ -48,7 +55,7 @@ window.addEventListener('load', function () {
             }
         } else {
             this.alert('Você não tem permissão para acessar essa página!');
-            redirectToAnotherPage
+            redirectToAnotherPage()
         }
     }
  
@@ -61,7 +68,6 @@ window.addEventListener('resize', function () {
     var pagina = document.title;
 
     if (pagina == 'Consulta de Usuário') {
-        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador']
         if (checkUserPermission()) {
             const device = getDeviceType();
@@ -75,7 +81,6 @@ window.addEventListener('resize', function () {
             redirectToAnotherPage()
         }
     } else if (pagina == 'Consulta de Animais') {
-        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador', 'Veterinário', 'Funcionário']
         if (checkUserPermission(canAccess)) {
             const device = getDeviceType();
@@ -86,7 +91,7 @@ window.addEventListener('resize', function () {
             }
         } else {
             this.alert('Você não tem permissão para acessar essa página!');
-            redirectToAnotherPage
+            redirectToAnotherPage()
         }
     }
 })
@@ -190,7 +195,16 @@ function voltar() {
     history.back();
 }
 
-
+function togglePriceField() {
+    var checkBox = document.getElementById("isAnimalBuy");
+    var priceField = document.getElementById("priceField");
+    if (checkBox.checked == true){
+        priceField.style.display = "block";
+    } else {
+        priceField.style.display = "none";
+        priceField.value = null;
+    }
+}
 /**
  *! LÓGICAS DE NEGÓCIO
  */
@@ -496,7 +510,7 @@ function loginPage() {
     })
     .then(data => {
         console.log(data);
-        savePrefsUsuario(data.login, data.perfil);
+        savePrefsUsuario(data.idUsuario, data.login, data.perfil);
         window.open("home.html", "_self");
     })
     .catch(error => console.log(error));
@@ -627,6 +641,101 @@ btnFiltroUsuario?.addEventListener('click', function () {
     .catch(error => console.log(error));
 });
 
+// [ACTION] Evento para salvar usuário
+const btnSaveAnimal = document.getElementById("btn-save-animal");
+
+btnSaveAnimal?.addEventListener('click', function () {
+
+    const idMae = document.getElementById('n-mae').value;
+    const idUsuario = getIdUsuario();
+    const numId = document.getElementById('n-identificador').value;
+    const tipo = document.getElementById('options-especie').value;
+    const dtNasc = document.getElementById('dt-nascimento').value;
+    const peso = document.getElementById('peso').value;
+    const status = document.getElementById('options-status').value;
+    const genero = document.getElementById('options-genero').value;
+
+    // Regular expression to check date format dd/mm/yyyy
+    const datePattern = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+
+    if (!datePattern.test(dtNasc)) {
+        alert("Data de nascimento não está no formato correto (dd/mm/yyyy). Por favor, corrija e tente novamente.");
+        if (!nome) document.getElementById('nome-completo').value = '';
+        if (!cpf) document.getElementById('cpf').value = '';
+        if (!dtNasc) document.getElementById('dt-nasc').value = '';
+        if (!perfil) document.getElementById('options-perfil').value = '';
+        if (!email) document.getElementById('email').value = '';
+        if (!login) document.getElementById('login').value = '';
+        if (!senha) document.getElementById('senha').value = '';
+        return;
+    }
+
+    if (nome && cpf && dtNasc && perfil && email && login && senha) {
+        callApiToSaveAnimal(nome, cpf, dtNasc, perfil, email, login, senha);
+    } else {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        if (!nome) document.getElementById('nome-completo').value = '';
+        if (!cpf) document.getElementById('cpf').value = '';
+        if (!dtNasc) document.getElementById('dt-nasc').value = '';
+        if (!perfil) document.getElementById('options-perfil').value = '';
+        if (!email) document.getElementById('email').value = '';
+        if (!login) document.getElementById('login').value = '';
+        if (!senha) document.getElementById('senha').value = '';
+        return;
+    }
+
+});
+
+// Função que chama back-end para salvar usuário
+async function callApiToSaveAnimal(nome, cpf,  dtNasc, perfil, email, login, senha) {
+
+    const url = new URL('http://localhost:8080/gado/usuario/salvar-usuario');
+
+    // Add login and senha as query parameters
+    url.searchParams.append('login', login);
+    url.searchParams.append('senha', senha);
+
+    // Parâmetros que serão enviados no corpo da solicitação POST
+    const parametros = {
+        nome: nome,
+        cpf: cpf,
+        dataNasc: new Date(dtNasc.split('/').reverse().join('-')).toISOString().split('T')[0],
+        dataCadast: new Date().toISOString().split('T')[0],
+        perfil: perfil,
+        emailUsuario: email,
+    };
+
+    // Configuração da solicitação POST
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Indica que o corpo da solicitação é JSON
+        },
+        body: JSON.stringify(parametros) // Converte o objeto de parâmetros em JSON
+    };
+
+    // Realiza a solicitação POST
+    fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ocorreu um erro ao enviar a solicitação.');
+            }
+            return response.json(); // Converte a resposta JSON em um objeto JavaScript
+        })
+        .then(data => {
+            console.log('Sucesso:', data);
+            alert('Usuário salvo com sucesso!');
+            location.reload();
+            return;
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao salvar o usuário.');
+            location.reload();
+            return;
+        });
+}
+
 // [ACTION] Evento para filtrar animais
 const btnFiltroAnimal = document.getElementById("btn-filtro-animal");
 
@@ -705,10 +814,16 @@ async function deleteUsuario() {
 }
 
 //! LOCAL STORAGE - AMAZENAMENTO DO USUARIO LOCALMENTE (BROWSER)
-function savePrefsUsuario(usuario, tipo) {
+function savePrefsUsuario(idUsuario, usuario, tipo) {
+    localStorage.setItem("idUsuario", idUsuario);
     localStorage.setItem("usuario", usuario);
     localStorage.setItem("perfil", tipo);
     window.location.href = "home.html";
+}
+
+function getIdUsuario() {
+    var idUsuario = localStorage.getItem("idUsuario");
+    return idUsuario;
 }
 
 function getUsuario() {
@@ -722,6 +837,7 @@ function getPerfil() {
 }
 
 function clearPrefsUsuario() {
+    localStorage.removeItem("idUsuario");
     localStorage.removeItem("usuario");
     localStorage.removeItem("perfil");
 }
