@@ -6,8 +6,22 @@ window.addEventListener('load', function () {
     if (pagina == 'Login - Sutero') {
         clearPrefsUsuario()
     }
+    
+    if (pagina == 'Home - Sutero') {
+        checkUser();
+    }
+
+    if (pagina == 'Cadastro Usuário') {
+        checkUser();
+        const canAccess = ['Fazendeiro', 'Administrador']
+        if (!checkUserPermission(canAccess)) {
+            this.alert('Você não tem permissão para acessar essa página!');
+            redirectToAnotherPage()
+        }
+    }
 
     if (pagina == 'Consulta de Usuário') {
+        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador']
         if (checkUserPermission(canAccess)) {
             const device = getDeviceType();
@@ -20,7 +34,10 @@ window.addEventListener('load', function () {
             this.alert('Você não tem permissão para acessar essa página!');
             redirectToAnotherPage()
         }
-    } else if (pagina == 'Consulta de Animais') {
+    } 
+    
+    if (pagina == 'Consulta de Animais') {
+        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador', 'Veterinário', 'Funcionário']
         if (checkUserPermission(canAccess)) {
             const device = getDeviceType();
@@ -34,7 +51,7 @@ window.addEventListener('load', function () {
             redirectToAnotherPage
         }
     }
-
+ 
     setInfoUsuario(pagina);
 
 });
@@ -44,6 +61,7 @@ window.addEventListener('resize', function () {
     var pagina = document.title;
 
     if (pagina == 'Consulta de Usuário') {
+        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador']
         if (checkUserPermission()) {
             const device = getDeviceType();
@@ -57,6 +75,7 @@ window.addEventListener('resize', function () {
             redirectToAnotherPage()
         }
     } else if (pagina == 'Consulta de Animais') {
+        checkUser();
         const canAccess = ['Fazendeiro', 'Administrador', 'Veterinário', 'Funcionário']
         if (checkUserPermission(canAccess)) {
             const device = getDeviceType();
@@ -84,12 +103,19 @@ function setInfoUsuario(pagina) {
     }
 }
 
-//Função para verificar permissão de usuário
+// Função para verificar se há usuário logado
+function checkUser() {
+    if (getUsuario() == null) {
+        window.location.href = 'index.html';
+    }
+}
+
+// Função para verificar permissão de usuário
 function checkUserPermission(canAccess) {
     return canAccess.includes(getPerfil());
 }
 
-//Função para deslogar usuário
+// Função para deslogar usuário
 function logout() {
     clearPrefsUsuario();
     window.location.href = 'index.html';
@@ -283,7 +309,7 @@ async function retrieveUsuarioData() {
 }
 
 
-//função para gerar dados em forma de cards - mobile
+// Função para gerar dados em forma de cards - mobile
 function displayCardListUsuario() {
 
     const cards = document.getElementById('card-list-usuarios');
@@ -326,7 +352,7 @@ function displayCardListUsuario() {
     });
 }
 
-//função para gerar dados em forma de cards - mobile
+// Função para gerar dados em forma de cards - mobile
 function displayCardListAnimal() {
 
     const cards = document.getElementById('card-list-animais');
@@ -369,7 +395,7 @@ function displayCardListAnimal() {
     });
 }
 
-//função para gerar dados em forma de tabela - devices médios e grandes
+// Função para gerar dados em forma de tabela - devices médios e grandes
 async function displayTableUsuario(usuarioList) {
 
     const tabela = document.getElementById('dataTable');
@@ -406,7 +432,7 @@ async function displayTableUsuario(usuarioList) {
     });
 }
 
-//função para gerar dados em forma de tabela - devices médios e grandes
+//Função para gerar dados em forma de tabela - devices médios e grandes
 async function displayTableAnimal(animalList) {
 
     const tabela = document.getElementById('dataTable');
@@ -445,7 +471,6 @@ async function displayTableAnimal(animalList) {
         container?.appendChild(row);
     });
 }
-
 
 /**
  *******************************   EVENTOS DE INTERAÇÃO USUÁRIO   *******************************
@@ -522,7 +547,7 @@ btnSaveUsuario?.addEventListener('click', function () {
 });
 
 
-//Salvando usuário no banco de dados
+// Função que chama back-end para salvar usuário
 async function callApiToSaveUser(nome, cpf,  dtNasc, perfil, email, login, senha) {
 
     const url = new URL('http://localhost:8080/gado/usuario/salvar-usuario');
