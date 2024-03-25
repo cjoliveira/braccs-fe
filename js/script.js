@@ -663,7 +663,7 @@ btnSaveAnimal?.addEventListener('click', async function () {
     const dtNasc = document.getElementById('dt-nascimento').value;
     const peso = document.getElementById('peso').value;
     const status = document.getElementById('options-status').value;
-    const preco = document.getElementById('text-price-field').value;
+    const preco = document.getElementById('text-price-field').value || null;
     const genero = document.getElementById('options-genero').value;
     
     var imageByteArray = await retrieveByteArrayImageOrNull();
@@ -684,8 +684,12 @@ btnSaveAnimal?.addEventListener('click', async function () {
         return;
     }
 
-    if (idMae && numId && tipo && dtNasc && peso && status && preco && genero) {
-        callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco);
+    if (idMae && numId && tipo && dtNasc && peso && status && genero) {
+        idAnimal = await callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco);
+        if(imageByteArray != null) {
+            await callApiToSaveAnimalPicture(idAnimal, imageByteArray)
+        }
+        location.reload();
     } else {
         alert("Por favor, preencha todos os campos obrigatórios.");
         if (!idMae) document.getElementById('n-mae').value = '';
@@ -714,24 +718,59 @@ async function convertToByteArray(imageSrc) {
     var byteArray = new Uint8Array(arrayBuffer);
     return byteArray;
 }
+
 // Função que chama back-end para salvar usuário
 async function callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco) {
 
     const url = new URL('http://localhost:8080/gado/animal/salvar-animal');
 
-
     // Parâmetros que serão enviados no corpo da solicitação POST
     const parametros = {
-        idMae: idMae,
-        idUsuarioCadastro: idUsuario,
-        numId: numId,
+        idMae: Number(idMae),
+        idUsuarioCadastro: Number(idUsuario),
+        numId: Number(numId),
         tipo: tipo,
         genero: genero,
         dataNasc: new Date(dtNasc.split('/').reverse().join('-')).toISOString().split('T')[0],
         dataCadastro: new Date().toISOString().split('T')[0],
-        peso: peso,
+        peso: Number(peso),
         statusAtual: status,
-        preco: preco
+        preco: preco ? Number(preco) : null
+    };
+
+    // Configuração da solicitação POST
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Indica que o corpo da solicitação é JSON
+        },
+        body: JSON.stringify(parametros) // Converte o objeto de parâmetros em JSON
+    };
+
+    // Realiza a solicitação POST
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('Ocorreu um erro ao enviar a solicitação.');
+        }
+        const data = await response.json(); // Converte a resposta JSON em um objeto JavaScript
+        console.log('Sucesso:', data);
+        return data.idAnimal;
+    } catch (error) {
+        console.error('Erro:', error);
+        location.reload();
+    }
+}
+
+async function callApiToSaveAnimalPicture(idAnimal, byteArray) {
+
+    const url = new URL('http://localhost:8080/gado/historico-fotos/salvar-foto');
+
+    // Parâmetros que serão enviados no corpo da solicitação POST
+    const parametros = {
+        idAnimal: idAnimal,
+        dataFoto: new Date().toISOString(),
+        foto: byteArray
     };
 
     // Configuração da solicitação POST
@@ -754,7 +793,6 @@ async function callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc
         .then(data => {
             console.log('Sucesso:', data);
             alert('Animal salvo com sucesso!');
-            location.reload();
             return;
         })
         .catch(error => {
