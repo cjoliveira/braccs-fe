@@ -43,8 +43,16 @@
                     <h3 class="desc-pag">Informe os dados de cadastro para o novo animal</h3>
                 </div>
 
-                <div class="div-foto">
-                    <img src="assets/vaca.png">
+                <div class="row espaco-top">
+                    <div class="espaco-dir" data-flag="true">
+                        <div class="div-foto">
+                            <img id="preview" src="assets/vaca.png" data-flag="false">
+                        </div>
+                    </div>
+
+                    <div id="imageBox">
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewImage(event)">
+                    </div>
                 </div>
 
                 <div class="row">
@@ -131,7 +139,6 @@
 
             <div class="div-2 pad"></div>
         </div>
-
 
     </div>
 

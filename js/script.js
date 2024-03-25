@@ -205,6 +205,16 @@ function togglePriceField() {
         document.getElementById("text-price-field").value = null;
     }
 }
+
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = async function(){
+        var output = document.getElementById('preview');
+        output.src = reader.result;
+        output.setAttribute('data-flag', 'true');
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
 /**
  *! LÓGICAS DE NEGÓCIO
  */
@@ -644,7 +654,7 @@ btnFiltroUsuario?.addEventListener('click', function () {
 // [ACTION] Evento para salvar usuário
 const btnSaveAnimal = document.getElementById("btn-save-animal");
 
-btnSaveAnimal?.addEventListener('click', function () {
+btnSaveAnimal?.addEventListener('click', async function () {
 
     const idMae = document.getElementById('n-mae').value;
     const idUsuario = getIdUsuario();
@@ -655,6 +665,8 @@ btnSaveAnimal?.addEventListener('click', function () {
     const status = document.getElementById('options-status').value;
     const preco = document.getElementById('text-price-field').value;
     const genero = document.getElementById('options-genero').value;
+    
+    var imageByteArray = await retrieveByteArrayImageOrNull();
 
     // Regular expression to check date format dd/mm/yyyy
     const datePattern = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
@@ -689,6 +701,19 @@ btnSaveAnimal?.addEventListener('click', function () {
 
 });
 
+async function retrieveByteArrayImageOrNull() {
+    if (document.getElementById('preview').getAttribute('data-flag') === 'true'){
+        return await convertToByteArray(document.getElementById('preview').src);
+    }
+    return null;
+}
+
+async function convertToByteArray(imageSrc) {
+    var blob = await fetch(imageSrc).then(r => r.blob());
+    var arrayBuffer = await new Response(blob).arrayBuffer();
+    var byteArray = new Uint8Array(arrayBuffer);
+    return byteArray;
+}
 // Função que chama back-end para salvar usuário
 async function callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco) {
 
