@@ -202,7 +202,7 @@ function togglePriceField() {
         priceField.style.display = "block";
     } else {
         priceField.style.display = "none";
-        priceField.value = null;
+        document.getElementById("text-price-field").value = null;
     }
 }
 /**
@@ -653,6 +653,7 @@ btnSaveAnimal?.addEventListener('click', function () {
     const dtNasc = document.getElementById('dt-nascimento').value;
     const peso = document.getElementById('peso').value;
     const status = document.getElementById('options-status').value;
+    const preco = document.getElementById('text-price-field').value;
     const genero = document.getElementById('options-genero').value;
 
     // Regular expression to check date format dd/mm/yyyy
@@ -660,49 +661,52 @@ btnSaveAnimal?.addEventListener('click', function () {
 
     if (!datePattern.test(dtNasc)) {
         alert("Data de nascimento não está no formato correto (dd/mm/yyyy). Por favor, corrija e tente novamente.");
-        if (!nome) document.getElementById('nome-completo').value = '';
-        if (!cpf) document.getElementById('cpf').value = '';
-        if (!dtNasc) document.getElementById('dt-nasc').value = '';
-        if (!perfil) document.getElementById('options-perfil').value = '';
-        if (!email) document.getElementById('email').value = '';
-        if (!login) document.getElementById('login').value = '';
-        if (!senha) document.getElementById('senha').value = '';
+        if (!idMae) document.getElementById('n-mae').value = '';
+        if (!numId) document.getElementById('n-identificador').value = '';
+        if (!tipo) document.getElementById('options-especie').value = '';
+        if (!dtNasc) document.getElementById('dt-nascimento').value = '';
+        if (!peso) document.getElementById('peso').value = '';
+        if (!status) document.getElementById('options-status').value = '';
+        if (!preco) document.getElementById('text-price-field').value = null;
+        if (!genero) document.getElementById('options-genero').value = '';
         return;
     }
 
-    if (nome && cpf && dtNasc && perfil && email && login && senha) {
-        callApiToSaveAnimal(nome, cpf, dtNasc, perfil, email, login, senha);
+    if (idMae && numId && tipo && dtNasc && peso && status && preco && genero) {
+        callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco);
     } else {
         alert("Por favor, preencha todos os campos obrigatórios.");
-        if (!nome) document.getElementById('nome-completo').value = '';
-        if (!cpf) document.getElementById('cpf').value = '';
-        if (!dtNasc) document.getElementById('dt-nasc').value = '';
-        if (!perfil) document.getElementById('options-perfil').value = '';
-        if (!email) document.getElementById('email').value = '';
-        if (!login) document.getElementById('login').value = '';
-        if (!senha) document.getElementById('senha').value = '';
+        if (!idMae) document.getElementById('n-mae').value = '';
+        if (!numId) document.getElementById('n-identificador').value = '';
+        if (!tipo) document.getElementById('options-especie').value = '';
+        if (!dtNasc) document.getElementById('dt-nascimento').value = '';
+        if (!peso) document.getElementById('peso').value = '';
+        if (!status) document.getElementById('options-status').value = '';
+        if (!preco) document.getElementById('text-price-field').value = null;
+        if (!genero) document.getElementById('options-genero').value = '';
         return;
     }
 
 });
 
 // Função que chama back-end para salvar usuário
-async function callApiToSaveAnimal(nome, cpf,  dtNasc, perfil, email, login, senha) {
+async function callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco) {
 
-    const url = new URL('http://localhost:8080/gado/usuario/salvar-usuario');
+    const url = new URL('http://localhost:8080/gado/animal/salvar-animal');
 
-    // Add login and senha as query parameters
-    url.searchParams.append('login', login);
-    url.searchParams.append('senha', senha);
 
     // Parâmetros que serão enviados no corpo da solicitação POST
     const parametros = {
-        nome: nome,
-        cpf: cpf,
+        idMae: idMae,
+        idUsuarioCadastro: idUsuario,
+        numId: numId,
+        tipo: tipo,
+        genero: genero,
         dataNasc: new Date(dtNasc.split('/').reverse().join('-')).toISOString().split('T')[0],
-        dataCadast: new Date().toISOString().split('T')[0],
-        perfil: perfil,
-        emailUsuario: email,
+        dataCadastro: new Date().toISOString().split('T')[0],
+        peso: peso,
+        statusAtual: status,
+        preco: preco
     };
 
     // Configuração da solicitação POST
@@ -724,13 +728,13 @@ async function callApiToSaveAnimal(nome, cpf,  dtNasc, perfil, email, login, sen
         })
         .then(data => {
             console.log('Sucesso:', data);
-            alert('Usuário salvo com sucesso!');
+            alert('Animal salvo com sucesso!');
             location.reload();
             return;
         })
         .catch(error => {
             console.error('Erro:', error);
-            alert('Ocorreu um erro ao salvar o usuário.');
+            alert('Ocorreu um erro ao salvar o animal.');
             location.reload();
             return;
         });

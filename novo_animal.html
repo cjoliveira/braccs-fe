@@ -95,22 +95,29 @@
                 <div class="row espaco-top">
                     <div class="div-textfield espaco-dir">
                         <div class="colum">
-                            <label for="n-mae">Número da mãe*</label>
-                            <input type="text" id="n-mae" name="n-mae" required>
+                            <label for="n-mae">Número da mãe</label>
+                            <input type="text" id="n-mae" name="n-mae">
                         </div>
                     </div>
 
                     <div class="div-textfield">
                         <div class="colum">
                             <label for="dt-nascimento">Data de Nascimento*</label>
-                            <input type="text" id="dt-nascimento" name="dt-nascimento" required>
+                            <input type="text" id="dt-nascimento" name="dt-nascimento" placeholder="dd/mm/yyyy" required>
                         </div>
                     </div>
                 </div>
 
-                <div class="checkbox-container espaco-top">
-                    <input type="checkbox" id="minhaCheckbox" class="custom-checkbox">
-                    <label for="minhaCheckbox" class="checkbox-label">Animal Comprado</label>
+                <div class="row espaco-top">
+                    <div class="checkbox-container espaco-top">
+                        <input type="checkbox" id="isAnimalBuy" class="custom-checkbox" onchange="togglePriceField()">
+                        <label for="isAnimalBuy" class="checkbox-label">Animal Comprado</label>
+                    </div>
+
+                    <div id="priceField" style="display: none;">
+                        <label for="price">Preço:</label>
+                        <input type="text" id="text-price-field" name="price">
+                    </div>
                 </div>
 
                 <div class="div-textarea">
@@ -118,7 +125,7 @@
                     <textarea id="meuTextarea" name="meuTexto" placeholder="Digite aqui..."></textarea>
                 </div>
 
-                <button id="btn-save-usuario">Salvar</button>
+                <button id="btn-save-animal">Salvar</button>
 
             </div>
 
