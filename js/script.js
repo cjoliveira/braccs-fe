@@ -686,10 +686,19 @@ btnSaveAnimal?.addEventListener('click', async function () {
 
     if (idMae && numId && tipo && dtNasc && peso && status && genero) {
         idAnimal = await callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc, peso, status, preco);
+        var flag = false;
         if(imageByteArray != null) {
-            await callApiToSaveAnimalPicture(idAnimal, imageByteArray)
+            flag = await callApiToSaveAnimalPicture(idAnimal, imageByteArray)
         }
-        location.reload();
+
+        if(flag) {
+            alert('Animal e foto salvos com sucesso!');
+            location.reload();
+        } else {
+            alert('Ocorreu um erro ao salvar animal ou foto. Por favor, tente novamente.');
+            location.reload();
+        }
+        
     } else {
         alert("Por favor, preencha todos os campos obrigatórios.");
         if (!idMae) document.getElementById('n-mae').value = '';
@@ -758,7 +767,6 @@ async function callApiToSaveAnimal(idMae, idUsuario, numId, tipo, genero, dtNasc
         return data.idAnimal;
     } catch (error) {
         console.error('Erro:', error);
-        location.reload();
     }
 }
 
@@ -768,9 +776,9 @@ async function callApiToSaveAnimalPicture(idAnimal, byteArray) {
 
     // Parâmetros que serão enviados no corpo da solicitação POST
     const parametros = {
-        idAnimal: idAnimal,
+        idAnimal: Number(idAnimal),
         dataFoto: new Date().toISOString(),
-        foto: byteArray
+        foto: btoa(String.fromCharCode.apply(null, byteArray))
     };
 
     // Configuração da solicitação POST
@@ -783,24 +791,17 @@ async function callApiToSaveAnimalPicture(idAnimal, byteArray) {
     };
 
     // Realiza a solicitação POST
-    fetch(url, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ocorreu um erro ao enviar a solicitação.');
-            }
-            return response.json(); // Converte a resposta JSON em um objeto JavaScript
-        })
-        .then(data => {
-            console.log('Sucesso:', data);
-            alert('Animal salvo com sucesso!');
-            return;
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Ocorreu um erro ao salvar o animal.');
-            location.reload();
-            return;
-        });
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+            throw new Error('Ocorreu um erro ao enviar a solicitação.');
+        }
+        const data = await response.json(); // Converte a resposta JSON em um objeto JavaScript
+        console.log('Sucesso:', data);
+        return true;
+    } catch (error) {
+        console.error('Erro:', error);
+    }
 }
 
 // [ACTION] Evento para filtrar animais
